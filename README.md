@@ -9,11 +9,31 @@ Serve Buddy is a simple, lightweight HTTP file server that allows you to easily 
 - Cross-platform compatibility (Windows, macOS, Linux)
 - Customizable port and directory settings
 - Local and network URL access
+- Efficient handling of large files
+- Responsive to Ctrl+C for quick shutdown
 
 ## Installation
 
 1. Ensure you have Python 3.6 or higher installed on your system.
-2. Clone this repository or download the `serve_buddy.py` file.
+2. Choose one of the following methods to get Serve Buddy:
+
+   a. Clone the repository:
+   ```
+   git clone https://github.com/cardit1/Serve-Buddy.git
+   cd Serve-Buddy
+   ```
+
+   b. Download the script directly using wget:
+   ```
+   wget https://raw.githubusercontent.com/cardit1/Serve-Buddy/master/serve_buddy.py -o serve_buddy.py
+   ```
+
+   c. Download the script directly using curl:
+   ```
+   curl -O https://raw.githubusercontent.com/cardit1/Serve-Buddy/master/serve_buddy.py
+   ```
+
+These commands will download the `serve_buddy.py` file to your current directory.
 
 ## Usage Guide
 
