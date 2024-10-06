@@ -217,16 +217,16 @@ class FileServerHandler(BaseHTTPRequestHandler):
                 footer p {{
                     margin: 5px 0;
                 }}
-                .social-icons {{
+                .github-link {{
+                    display: inline-block;
                     margin-top: 10px;
                 }}
-                .social-icons a {{
+                .github-link a {{
                     color: #fff;
-                    font-size: 20px;
-                    margin: 0 10px;
+                    font-size: 24px;
                     transition: color 0.3s ease;
                 }}
-                .social-icons a:hover {{
+                .github-link a:hover {{
                     color: var(--secondary-color);
                 }}
             </style>
@@ -255,10 +255,10 @@ class FileServerHandler(BaseHTTPRequestHandler):
             <footer>
                 <p>&copy; 2023 Serve Buddy. All rights reserved.</p>
                 <p>Version {VERSION}</p>
-                <div class="social-icons">
-                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                <div class="github-link">
+                    <a href="https://github.com/cardit1/Serve-Buddy" title="GitHub" target="_blank">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
                 </div>
             </footer>
             <script>
