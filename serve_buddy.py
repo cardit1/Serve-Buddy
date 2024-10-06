@@ -82,86 +82,203 @@ class FileServerHandler(BaseHTTPRequestHandler):
             self.send_error(404, 'File not found')
 
     def get_html(self):
-        # Generate HTML for the main page
         files = os.listdir(self.server.upload_dir)
-        file_list = ''.join([f'<li><a href="/download/{f}">{f}</a></li>' for f in files if os.path.isfile(os.path.join(self.server.upload_dir, f))])
-        return f'''
-        <html>
+        file_list = ''.join([f'<li><a href="/download/{f}"><i class="fas fa-file"></i>{f}</a></li>' for f in files if os.path.isfile(os.path.join(self.server.upload_dir, f))])
+        return f"""
+        <!DOCTYPE html>
+        <html lang="en">
         <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Serve Buddy</title>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
             <style>
-                body {{
-                    font-family: Arial, sans-serif;
-                    line-height: 1.6;
-                    color: #333;
-                    max-width: 800px;
-                    margin: 0 auto;
-                    padding: 20px;
-                    background-color: #f4f4f4;
+                :root {{
+                    --primary-color: #3498db;
+                    --secondary-color: #2ecc71;
+                    --background-color: #ecf0f1;
+                    --text-color: #34495e;
+                    --hover-color: #2980b9;
                 }}
-                h1, h2 {{
-                    color: #2c3e50;
+                body {{
+                    font-family: 'Poppins', sans-serif;
+                    line-height: 1.6;
+                    margin: 0;
+                    padding: 0;
+                    background-color: var(--background-color);
+                    color: var(--text-color);
                 }}
                 .container {{
-                    background-color: white;
-                    border-radius: 5px;
+                    width: 80%;
+                    margin: auto;
+                    overflow: hidden;
                     padding: 20px;
-                    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                    background-color: #fff;
+                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                    border-radius: 10px;
+                    margin-top: 20px;
+                }}
+                h1 {{
+                    color: var(--primary-color);
+                    text-align: center;
+                    font-size: 2.5em;
+                    margin-bottom: 30px;
                 }}
                 ul {{
                     list-style-type: none;
                     padding: 0;
                 }}
                 li {{
-                    margin-bottom: 10px;
+                    background: var(--background-color);
+                    margin: 10px 0;
+                    padding: 15px;
+                    border-radius: 5px;
+                    transition: all 0.3s ease;
+                }}
+                li:hover {{
+                    background: var(--hover-color);
+                    transform: translateY(-3px);
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                }}
+                li:hover a {{
+                    color: #fff;
                 }}
                 a {{
-                    color: #3498db;
+                    color: var(--text-color);
                     text-decoration: none;
-                }}
-                a:hover {{
-                    text-decoration: underline;
+                    transition: color 0.3s ease;
                 }}
                 .upload-form {{
+                    background: var(--background-color);
+                    padding: 30px;
+                    border-radius: 10px;
                     margin-top: 20px;
-                    background-color: #ecf0f1;
-                    padding: 20px;
+                }}
+                input[type="file"], input[type="submit"] {{
+                    display: block;
+                    width: 100%;
+                    margin: 15px 0;
+                    padding: 15px;
+                    border: none;
                     border-radius: 5px;
                 }}
-                input[type="file"] {{
-                    margin-bottom: 10px;
-                }}
                 input[type="submit"] {{
-                    background-color: #3498db;
-                    color: white;
-                    padding: 10px 15px;
-                    border: none;
-                    border-radius: 3px;
+                    background: var(--secondary-color);
+                    color: #fff;
                     cursor: pointer;
+                    transition: background 0.3s ease;
                 }}
                 input[type="submit"]:hover {{
-                    background-color: #2980b9;
+                    background: #27ae60;
+                }}
+                .tabs {{
+                    overflow: hidden;
+                    border: 1px solid var(--primary-color);
+                    background-color: #fff;
+                    border-radius: 5px 5px 0 0;
+                }}
+                .tab {{
+                    background-color: inherit;
+                    float: left;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+                    padding: 14px 16px;
+                    transition: 0.3s;
+                    font-size: 17px;
+                    color: var(--text-color);
+                }}
+                .tab:hover {{
+                    background-color: var(--background-color);
+                }}
+                .tab.active {{
+                    background-color: var(--primary-color);
+                    color: #fff;
+                }}
+                .tab-content {{
+                    display: none;
+                    padding: 20px;
+                    border: 1px solid var(--primary-color);
+                    border-top: none;
+                    border-radius: 0 0 5px 5px;
+                }}
+                .tab-content.active {{
+                    display: block;
+                }}
+                footer {{
+                    text-align: center;
+                    margin-top: 40px;
+                    padding: 20px;
+                    background-color: var(--primary-color);
+                    color: #fff;
+                    border-radius: 5px;
+                }}
+                footer p {{
+                    margin: 5px 0;
+                }}
+                .social-icons {{
+                    margin-top: 10px;
+                }}
+                .social-icons a {{
+                    color: #fff;
+                    font-size: 20px;
+                    margin: 0 10px;
+                    transition: color 0.3s ease;
+                }}
+                .social-icons a:hover {{
+                    color: var(--secondary-color);
                 }}
             </style>
         </head>
         <body>
             <div class="container">
                 <h1>Serve Buddy</h1>
-                <h2>Files in {self.server.upload_dir}:</h2>
-                <ul>
-                    {file_list}
-                </ul>
-                <div class="upload-form">
-                    <h2>Upload File:</h2>
-                    <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="tabs">
+                    <button class="tab active" onclick="openTab(event, 'download')">Download</button>
+                    <button class="tab" onclick="openTab(event, 'upload')">Upload</button>
+                </div>
+                <div id="download" class="tab-content active">
+                    <h2>Files in {self.server.upload_dir}:</h2>
+                    <ul>
+                        {file_list}
+                    </ul>
+                </div>
+                <div id="upload" class="tab-content">
+                    <h2>Upload File</h2>
+                    <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
                         <input type="file" name="file">
                         <input type="submit" value="Upload">
                     </form>
                 </div>
             </div>
+            <footer>
+                <p>&copy; 2023 Serve Buddy. All rights reserved.</p>
+                <p>Version {VERSION}</p>
+                <div class="social-icons">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+            </footer>
+            <script>
+            function openTab(evt, tabName) {{
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tab-content");
+                for (i = 0; i < tabcontent.length; i++) {{
+                    tabcontent[i].style.display = "none";
+                }}
+                tablinks = document.getElementsByClassName("tab");
+                for (i = 0; i < tablinks.length; i++) {{
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }}
+                document.getElementById(tabName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }}
+            </script>
         </body>
         </html>
-        '''
+        """
 
 class QuickHttpServer(HTTPServer):
     def __init__(self, server_address, RequestHandlerClass, upload_dir):
