@@ -11,6 +11,7 @@ Serve Buddy is a simple, lightweight HTTP file server that allows you to easily 
 - Local and network URL access
 - Efficient handling of large files
 - Responsive to Ctrl+C for quick shutdown
+- **Share files between all devices on the same local network**
 
 ## Installation
 
@@ -54,6 +55,16 @@ You can specify a custom port and directory:
 ```
 python serve_buddy.py --port 8080 --dir /path/to/your/directory
 ```
+
+### Sharing Files Across Devices on the Same Local Network
+
+1. Ensure all devices (both the host and client devices) are connected to the same Wi-Fi network.
+2. Start Serve Buddy on your host device using the basic or custom usage instructions.
+3. Note the Network URL displayed in the terminal, which will be in the format `http://<your-ip-address>:<port>`.
+4. On any device connected to the same local network, open a web browser and enter the Network URL.
+5. You can now upload and download files using the web interface.
+
+**Note:** It's crucial that all devices are connected to the same Wi-Fi network for this feature to work properly. If you're having trouble connecting, double-check your network settings on all devices.
 
 ### Command-line Options
 
